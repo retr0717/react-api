@@ -44,31 +44,16 @@ export const Navbar = () => {
                     <i className="bi bi-cart"></i>
                     </a>
 
-                    <div className="dropdown">
+                    <div className="nav-item">
                         <a
-                            className="text-reset me-3 dropdown-toggle hidden-arrow"
+                            className="text-reset me-3"
                             href="#"
-                            id="navbarDropdownMenuLink"
                             role="button"
-                            data-mdb-toggle="dropdown"
                             aria-expanded="false"
                         >
                             <i className="fas fa-bell"></i>
                             <span className="badge rounded-pill badge-notification bg-danger">1</span>
                         </a>
-                        <ul
-                            className="dropdown-menu dropdown-menu-end"
-                            aria-labelledby="navbarDropdownMenuLink"
-                        >
-                            <li>
-                            </li>
-                            <li>
-                                <a className="dropdown-item" href="#">Another news</a>
-                            </li>
-                            <li>
-                                <a className="dropdown-item" href="#">Something else here</a>
-                            </li>
-                        </ul>
                     </div>
                     <div className="dropdown">
                         <a

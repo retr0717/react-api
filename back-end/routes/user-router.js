@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const {User,Products} = require('../model/model');
+const {User} = require('../model/model');
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 const multer = require('multer');
+const userHelper = require('../helpers/user-helper');
+const { route } = require('./admin-route');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -26,6 +28,15 @@ router.post('/upload',upload.single('image'),(req,res) => {
     const image = req.image;
     res.send(apiResponse({message: 'File uploaded successfully.', image}));
     
+})
+
+//image retrieve.
+router.get('get-product-img/:id',(req,res) => {
+
+    console.log("image retreieve");
+
+    res.send({type:"get"});
+    //res.send(`<img src=assets/products/${req.params.id}>`);
 })
 
 //Signup Method
@@ -84,27 +95,9 @@ router.post('/user-login',async (req,res) => {
 //Get Method to get four random images.
 router.get('/get-products',async (req, res,next) => {
 
-    const products = await Products.find();
+    let products = await userHelper.randomItems();
 
-    var randomItems = (products) => {
-
-        arr = [];
-        
-        for(let i = 0 ; i < 4 ;i++)
-        {
-            product = products[Math.floor(Math.random()*products.length)];
-            if(!arr.some(item => item === product))
-                arr.push(product);
-        }
-
-        return arr;
-    }
-
-    console.log(randomItems(products));
-
-   res.send({
-    type:"GET"
-   })
+   res.send({products});
 
 });
 

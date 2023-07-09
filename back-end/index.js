@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const path = require('path');
 const adminRoute = require('./routes/admin-route');
 const userRoute = require('./routes/user-router');
 require("dotenv").config();
@@ -20,10 +21,10 @@ mongoose.connect('mongodb://127.0.0.1:27017/demo', { useNewUrlParser: true, useU
 mongoose.Promise = global.Promise;
 
 //static files
-app.use(express.static('public'));
 
 app.use(express.json());
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
 //route
 app.use('/api/admin', adminRoute);

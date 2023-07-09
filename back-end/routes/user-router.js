@@ -4,8 +4,8 @@ const {User} = require('../model/model');
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 const multer = require('multer');
+const path = require('path');
 const userHelper = require('../helpers/user-helper');
-const { route } = require('./admin-route');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -27,16 +27,18 @@ router.post('/upload',upload.single('image'),(req,res) => {
 
     const image = req.image;
     res.send(apiResponse({message: 'File uploaded successfully.', image}));
-    
 })
 
 //image retrieve.
-router.get('get-product-img/:id',(req,res) => {
+router.get('/product-img/:id',(req,res) => {
+
+    const imagePath = path.join(__dirname, '..','public','products',`${req.params.id}.jpg`);
+
 
     console.log("image retreieve");
+    console.log(__dirname+'/..')
 
-    res.send({type:"get"});
-    //res.send(`<img src=assets/products/${req.params.id}>`);
+    res.sendFile(imagePath);
 })
 
 //Signup Method
@@ -96,6 +98,7 @@ router.post('/user-login',async (req,res) => {
 router.get('/get-products',async (req, res,next) => {
 
     let products = await userHelper.randomItems();
+    console.log(__dirname);
 
    res.send({products});
 
